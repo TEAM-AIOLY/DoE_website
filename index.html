@@ -3,132 +3,199 @@
 <head>
   <meta charset="UTF-8">
   <title>Simulateur de modèle Y</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    :root {
+      --primary: #007acc;
+      --primary-dark: #005fa3;
+      --background: #f4f8fb;
+      --table-bg: #fff;
+      --border: #e3e8ee;
+      --header-bg: #007acc;
+      --header-color: #fff;
+      --hover-row: #eaf6ff;
+      --shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      background: #f9fafb;
-      color: #333;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      background: var(--background);
+      color: #222;
+      min-height: 100vh;
     }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: var(--table-bg);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 32px 24px 40px 24px;
+    }
+
     h1 {
-      color: #007acc;
+      color: var(--primary);
       text-align: center;
+      margin-top: 0;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
     }
+
+    .desc {
+      text-align: center;
+      margin-bottom: 28px;
+      color: #444;
+      font-size: 1.1rem;
+    }
+
     table {
       border-collapse: collapse;
-      margin: 20px auto;
-      width: 90%;
-      max-width: 800px;
-      background: white;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      width: 100%;
+      margin: 0 auto;
+      background: var(--table-bg);
       border-radius: 10px;
       overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
     }
+
     th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
+      border: 1px solid var(--border);
+      padding: 12px 8px;
       text-align: center;
+      font-size: 1.05rem;
+      transition: background .2s;
     }
+
     th {
-      background-color: #007acc;
-      color: white;
+      background: var(--header-bg);
+      color: var(--header-color);
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
-    input {
-      width: 80px;
-      padding: 5px;
+
+    tbody tr:hover {
+      background: var(--hover-row);
+    }
+
+    input[type="number"] {
+      width: 70px;
+      padding: 7px;
+      font-size: 1rem;
       text-align: center;
-      border: 1px solid #ccc;
+      border: 1px solid #bbb;
       border-radius: 6px;
+      outline: none;
+      transition: border 0.2s;
     }
-    button {
-      background: #007acc;
-      color: white;
+
+    input[type="number"]:focus {
+      border: 1.5px solid var(--primary);
+      background: #f0f8ff;
+    }
+
+    .btn {
+      background: var(--primary);
+      color: #fff;
       border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
+      padding: 12px 36px;
+      border-radius: 30px;
       cursor: pointer;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin: 32px auto 0 auto;
       display: block;
-      margin: 20px auto;
+      box-shadow: 0 2px 8px rgba(0,122,204,0.08);
+      transition: background 0.25s, box-shadow 0.25s;
     }
-    button:hover {
-      background: #005fa3;
+    .btn:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 4px 16px rgba(0,95,163,0.13);
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 10px 2px 24px 2px; }
+      table, th, td { font-size: 0.90rem; }
+      input[type="number"] { width: 48px; padding: 5px; }
     }
   </style>
 </head>
 <body>
-
-  <h1>🧮 Simulateur de modèle (9 variables)</h1>
-
-  <table id="tableau">
-    <thead>
-      <tr>
-        <th>Ligne</th>
-        <th>X₁</th>
-        <th>X₂</th>
-        <th>X₃</th>
-        <th>X₄</th>
-        <th>X₅</th>
-        <th>X₆</th>
-        <th>X₇</th>
-        <th>X₈</th>
-        <th>X₉</th>
-        <th>Y estimé</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- 3 lignes par défaut -->
-      <tr>
-        <td>1</td>
-        <td><input type="number" id="x1_1" step="any"></td>
-        <td><input type="number" id="x2_1" step="any"></td>
-        <td><input type="number" id="x3_1" step="any"></td>
-        <td><input type="number" id="x4_1" step="any"></td>
-        <td><input type="number" id="x5_1" step="any"></td>
-        <td><input type="number" id="x6_1" step="any"></td>
-        <td><input type="number" id="x7_1" step="any"></td>
-        <td><input type="number" id="x8_1" step="any"></td>
-        <td><input type="number" id="x9_1" step="any"></td>
-        <td id="y_1">-</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td><input type="number" id="x1_2" step="any"></td>
-        <td><input type="number" id="x2_2" step="any"></td>
-        <td><input type="number" id="x3_2" step="any"></td>
-        <td><input type="number" id="x4_2" step="any"></td>
-        <td><input type="number" id="x5_2" step="any"></td>
-        <td><input type="number" id="x6_2" step="any"></td>
-        <td><input type="number" id="x7_2" step="any"></td>
-        <td><input type="number" id="x8_2" step="any"></td>
-        <td><input type="number" id="x9_2" step="any"></td>
-        <td id="y_2">-</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td><input type="number" id="x1_3" step="any"></td>
-        <td><input type="number" id="x2_3" step="any"></td>
-        <td><input type="number" id="x3_3" step="any"></td>
-        <td><input type="number" id="x4_3" step="any"></td>
-        <td><input type="number" id="x5_3" step="any"></td>
-        <td><input type="number" id="x6_3" step="any"></td>
-        <td><input type="number" id="x7_3" step="any"></td>
-        <td><input type="number" id="x8_3" step="any"></td>
-        <td><input type="number" id="x9_3" step="any"></td>
-        <td id="y_3">-</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <button onclick="calculerTout()">Calculer Y</button>
+  <div class="container">
+    <h1>🧮 Simulateur de modèle (9 variables)</h1>
+    <div class="desc">
+      Complétez les valeurs pour chaque ligne et cliquez sur <b>Calculer Y</b> pour obtenir l’estimation.<br>
+      Le modèle est purement illustratif.
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Ligne</th>
+          <th>X₁</th>
+          <th>X₂</th>
+          <th>X₃</th>
+          <th>X₄</th>
+          <th>X₅</th>
+          <th>X₆</th>
+          <th>X₇</th>
+          <th>X₈</th>
+          <th>X₉</th>
+          <th>Y estimé</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><input type="number" id="x1_1" step="any"></td>
+          <td><input type="number" id="x2_1" step="any"></td>
+          <td><input type="number" id="x3_1" step="any"></td>
+          <td><input type="number" id="x4_1" step="any"></td>
+          <td><input type="number" id="x5_1" step="any"></td>
+          <td><input type="number" id="x6_1" step="any"></td>
+          <td><input type="number" id="x7_1" step="any"></td>
+          <td><input type="number" id="x8_1" step="any"></td>
+          <td><input type="number" id="x9_1" step="any"></td>
+          <td id="y_1">-</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><input type="number" id="x1_2" step="any"></td>
+          <td><input type="number" id="x2_2" step="any"></td>
+          <td><input type="number" id="x3_2" step="any"></td>
+          <td><input type="number" id="x4_2" step="any"></td>
+          <td><input type="number" id="x5_2" step="any"></td>
+          <td><input type="number" id="x6_2" step="any"></td>
+          <td><input type="number" id="x7_2" step="any"></td>
+          <td><input type="number" id="x8_2" step="any"></td>
+          <td><input type="number" id="x9_2" step="any"></td>
+          <td id="y_2">-</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><input type="number" id="x1_3" step="any"></td>
+          <td><input type="number" id="x2_3" step="any"></td>
+          <td><input type="number" id="x3_3" step="any"></td>
+          <td><input type="number" id="x4_3" step="any"></td>
+          <td><input type="number" id="x5_3" step="any"></td>
+          <td><input type="number" id="x6_3" step="any"></td>
+          <td><input type="number" id="x7_3" step="any"></td>
+          <td><input type="number" id="x8_3" step="any"></td>
+          <td><input type="number" id="x9_3" step="any"></td>
+          <td id="y_3">-</td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn" onclick="calculerTout()">Calculer Y</button>
+  </div>
 
   <script>
-    function modele(x1,x2,x3,x4,x5,x6,x7,x8,x9) {
+    function modele(x1, x2, x3, x4, x5, x6, x7, x8, x9) {
       // 🎯 Simulation d'un "modèle" arbitraire
-      // (tu peux modifier la formule selon ton idée)
       return (
-        2*x1 - 0.5*x2 + 0.8*x3 + 0.3*x4*x5 - 0.2*Math.pow(x6,2)
-        + 1.5*Math.sin(x7) + 0.7*Math.log(Math.abs(x8)+1) - 0.4*x9
-        + Math.random()*0.2
+        2 * x1 - 0.5 * x2 + 0.8 * x3 + 0.3 * x4 * x5 - 0.2 * Math.pow(x6, 2)
+        + 1.5 * Math.sin(x7) + 0.7 * Math.log(Math.abs(x8) + 1) - 0.4 * x9
+        + Math.random() * 0.2
       );
     }
 
@@ -144,11 +211,10 @@
         const x8 = parseFloat(document.getElementById(`x8_${i}`).value) || 0;
         const x9 = parseFloat(document.getElementById(`x9_${i}`).value) || 0;
 
-        const y = modele(x1,x2,x3,x4,x5,x6,x7,x8,x9);
+        const y = modele(x1, x2, x3, x4, x5, x6, x7, x8, x9);
         document.getElementById(`y_${i}`).innerText = y.toFixed(3);
       }
     }
   </script>
-
 </body>
 </html>
