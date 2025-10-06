@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulateur de modèle Y</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: #f9fafb;
+      color: #333;
+    }
+    h1 { color: #007acc; }
+    .inputs {
+      display: grid;
+      gap: 10px;
+      max-width: 300px;
+    }
+    input {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      background: #007acc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+    #resultat {
+      margin-top: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Simulateur de modèle</h1>
+  <p>Entrez les variables d'entrée :</p>
+  
+  <div class="inputs">
+    <label>X₁ : <input type="number" id="x1" step="any"></label>
+    <label>X₂ : <input type="number" id="x2" step="any"></label>
+    <label>X₃ : <input type="number" id="x3" step="any"></label>
+  </div>
+
+  <button onclick="calculer()">Estimer Y</button>
+  <div id="resultat"></div>
+
+  <script>
+    function calculer() {
+      const x1 = parseFloat(document.getElementById('x1').value) || 0;
+      const x2 = parseFloat(document.getElementById('x2').value) || 0;
+      const x3 = parseFloat(document.getElementById('x3').value) || 0;
+
+      // 🎯 Simulation d'un "modèle"
+      const y = 3*x1 - 0.8*x2 + 2*Math.sin(x3) + Math.random()*0.5;
+
+      document.getElementById('resultat').innerText = `Y estimé = ${y.toFixed(3)}`;
+    }
+  </script>
+</body>
+</html>
