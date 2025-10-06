@@ -1,10 +1,154 @@
-<html>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-    <title>Simulateur Modèle Y</title>
+  <meta charset="UTF-8">
+  <title>Simulateur de modèle Y</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: #f9fafb;
+      color: #333;
+    }
+    h1 {
+      color: #007acc;
+      text-align: center;
+    }
+    table {
+      border-collapse: collapse;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 800px;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #007acc;
+      color: white;
+    }
+    input {
+      width: 80px;
+      padding: 5px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      background: #007acc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+  </style>
 </head>
 <body>
-    <h1>Bienvenue sur le Simulateur Modèle Y</h1>
-    <p>Ceci est un simulateur pour le modèle Y.</p>
-    <!-- Ajoutez le contenu de votre simulateur ici -->
+
+  <h1>🧮 Simulateur de modèle (9 variables)</h1>
+
+  <table id="tableau">
+    <thead>
+      <tr>
+        <th>Ligne</th>
+        <th>X₁</th>
+        <th>X₂</th>
+        <th>X₃</th>
+        <th>X₄</th>
+        <th>X₅</th>
+        <th>X₆</th>
+        <th>X₇</th>
+        <th>X₈</th>
+        <th>X₉</th>
+        <th>Y estimé</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 3 lignes par défaut -->
+      <tr>
+        <td>1</td>
+        <td><input type="number" id="x1_1" step="any"></td>
+        <td><input type="number" id="x2_1" step="any"></td>
+        <td><input type="number" id="x3_1" step="any"></td>
+        <td><input type="number" id="x4_1" step="any"></td>
+        <td><input type="number" id="x5_1" step="any"></td>
+        <td><input type="number" id="x6_1" step="any"></td>
+        <td><input type="number" id="x7_1" step="any"></td>
+        <td><input type="number" id="x8_1" step="any"></td>
+        <td><input type="number" id="x9_1" step="any"></td>
+        <td id="y_1">-</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><input type="number" id="x1_2" step="any"></td>
+        <td><input type="number" id="x2_2" step="any"></td>
+        <td><input type="number" id="x3_2" step="any"></td>
+        <td><input type="number" id="x4_2" step="any"></td>
+        <td><input type="number" id="x5_2" step="any"></td>
+        <td><input type="number" id="x6_2" step="any"></td>
+        <td><input type="number" id="x7_2" step="any"></td>
+        <td><input type="number" id="x8_2" step="any"></td>
+        <td><input type="number" id="x9_2" step="any"></td>
+        <td id="y_2">-</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><input type="number" id="x1_3" step="any"></td>
+        <td><input type="number" id="x2_3" step="any"></td>
+        <td><input type="number" id="x3_3" step="any"></td>
+        <td><input type="number" id="x4_3" step="any"></td>
+        <td><input type="number" id="x5_3" step="any"></td>
+        <td><input type="number" id="x6_3" step="any"></td>
+        <td><input type="number" id="x7_3" step="any"></td>
+        <td><input type="number" id="x8_3" step="any"></td>
+        <td><input type="number" id="x9_3" step="any"></td>
+        <td id="y_3">-</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button onclick="calculerTout()">Calculer Y</button>
+
+  <script>
+    function modele(x1,x2,x3,x4,x5,x6,x7,x8,x9) {
+      // 🎯 Simulation d'un "modèle" arbitraire
+      // (tu peux modifier la formule selon ton idée)
+      return (
+        2*x1 - 0.5*x2 + 0.8*x3 + 0.3*x4*x5 - 0.2*Math.pow(x6,2)
+        + 1.5*Math.sin(x7) + 0.7*Math.log(Math.abs(x8)+1) - 0.4*x9
+        + Math.random()*0.2
+      );
+    }
+
+    function calculerTout() {
+      for (let i = 1; i <= 3; i++) {
+        const x1 = parseFloat(document.getElementById(`x1_${i}`).value) || 0;
+        const x2 = parseFloat(document.getElementById(`x2_${i}`).value) || 0;
+        const x3 = parseFloat(document.getElementById(`x3_${i}`).value) || 0;
+        const x4 = parseFloat(document.getElementById(`x4_${i}`).value) || 0;
+        const x5 = parseFloat(document.getElementById(`x5_${i}`).value) || 0;
+        const x6 = parseFloat(document.getElementById(`x6_${i}`).value) || 0;
+        const x7 = parseFloat(document.getElementById(`x7_${i}`).value) || 0;
+        const x8 = parseFloat(document.getElementById(`x8_${i}`).value) || 0;
+        const x9 = parseFloat(document.getElementById(`x9_${i}`).value) || 0;
+
+        const y = modele(x1,x2,x3,x4,x5,x6,x7,x8,x9);
+        document.getElementById(`y_${i}`).innerText = y.toFixed(3);
+      }
+    }
+  </script>
+
 </body>
 </html>
