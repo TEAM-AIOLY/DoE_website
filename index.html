@@ -31,6 +31,7 @@
       border-radius: 16px;
       box-shadow: var(--shadow);
       padding: 32px 24px 36px 24px;
+      box-sizing: border-box;
     }
     h1 {
       color: var(--primary);
@@ -61,16 +62,6 @@
       margin-left: auto;
       margin-right: auto;
     }
-    .contrainte {
-      margin: 0 auto 22px auto;
-      max-width: 900px;
-      font-size: 1rem;
-      background: #f8fbff;
-      border-left: 5px solid #007acc;
-      padding: 13px 18px 13px 18px;
-      border-radius: 0 9px 9px 0;
-      color: #17547d;
-    }
     table {
       border-collapse: collapse;
       margin: 0 auto;
@@ -83,7 +74,7 @@
     }
     th, td {
       border: 1px solid var(--border);
-      padding: 12px 8px;
+      padding: 12px 8px 8px 8px;
       text-align: center;
       font-size: 1.05rem;
       transition: background .2s;
@@ -94,13 +85,15 @@
       color: var(--header-color);
       font-weight: 600;
       letter-spacing: 0.5px;
+      padding-bottom: 6px;
     }
     .gamme {
-      font-size: 0.9em;
+      font-size: 0.88em;
       color: #007acc;
-      margin-top: 2px;
-      margin-bottom: 0;
       display: block;
+      margin-top: 2px;
+      margin-bottom: -4px;
+      font-weight: 400;
     }
     input[type="number"] {
       width: 90px;
@@ -148,33 +141,21 @@
       Vous devez optimiser un procédé en utilisant une approche de plan d'expérience numérique. À l'aide du simulateur ci-dessous, renseignez les paramètres de l'essai que vous souhaitez réaliser, puis cliquez sur <b>Simuler l'expérience</b> pour obtenir le résultat correspondant à vos choix. Reportez ce résultat dans votre logiciel de plan d'expériences.
     </div>
     <div class="desc">
-      Les paramètres à renseigner correspondent à des variables opératoires usuelles du génie des procédés. Respectez impérativement les plages autorisées pour chaque variable.
-      <br><b>Attention :</b> Le simulateur ne fournit qu'un seul résultat à la fois. Vous pouvez relancer autant de simulations que souhaité pour compléter votre plan expérimental sur votre logiciel.
-    </div>
-    <div class="contrainte">
-      <b>Gammes de variation des paramètres opératoires :</b>
-      Température : <b>20–120 °C</b> &nbsp;|&nbsp;
-      Pression : <b>1–20 bar</b> &nbsp;|&nbsp;
-      Débit d’alimentation : <b>1–100 L/h</b> &nbsp;|&nbsp;
-      Concentration initiale : <b>0.01–5 mol/L</b> &nbsp;|&nbsp;
-      Temps de réaction : <b>1–240 min</b> &nbsp;|&nbsp;
-      Agitation : <b>0–1500 rpm</b> &nbsp;|&nbsp;
-      pH initial : <b>1–14</b> &nbsp;|&nbsp;
-      Catalyseur : <b>1 (A), 2 (B), 3 (C)</b> &nbsp;|&nbsp;
-      Volume du réacteur : <b>0.1–10 L</b>
+      Les paramètres à renseigner correspondent à des variables opératoires usuelles du génie des procédés. Respectez impérativement les plages autorisées pour chaque variable.<br>
+      <b>Attention :</b> Le simulateur ne fournit qu'un seul résultat à la fois. Vous pouvez relancer autant de simulations que souhaité pour compléter votre plan expérimental sur votre logiciel.
     </div>
     <table>
       <thead>
         <tr>
-          <th>Température (°C)<br><span class="gamme">20–120</span></th>
-          <th>Pression (bar)<br><span class="gamme">1–20</span></th>
-          <th>Débit alim. (L/h)<br><span class="gamme">1–100</span></th>
-          <th>Conc. initiale (mol/L)<br><span class="gamme">0.01–5</span></th>
-          <th>Temps réaction (min)<br><span class="gamme">1–240</span></th>
-          <th>Agitation (rpm)<br><span class="gamme">0–1500</span></th>
-          <th>pH initial<br><span class="gamme">1–14</span></th>
-          <th>Catalyseur<br><span class="gamme">1, 2, 3</span></th>
-          <th>Volume (L)<br><span class="gamme">0.1–10</span></th>
+          <th>Température<br><span class="gamme">20–120 °C</span></th>
+          <th>Pression<br><span class="gamme">1–20 bar</span></th>
+          <th>Débit alim.<br><span class="gamme">1–100 L/h</span></th>
+          <th>Conc. initiale<br><span class="gamme">0.01–5 mol/L</span></th>
+          <th>Temps réaction<br><span class="gamme">1–240 min</span></th>
+          <th>Agitation<br><span class="gamme">0–1500 rpm</span></th>
+          <th>pH<br><span class="gamme">1–14</span></th>
+          <th>Catalyseur<br><span class="gamme">1,2,3</span></th>
+          <th>Volume<br><span class="gamme">0.1–10 L</span></th>
           <th>Y estimé</th>
         </tr>
       </thead>
