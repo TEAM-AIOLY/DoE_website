@@ -2,213 +2,245 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Simulateur de plan d'expérience - Sujet d'examen</title>
+  <title>🧪 Simulateur de plan d'expérience – Sujet d'examen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     :root {
-      --primary: #007acc;
+      --primary: #0078d7;
       --primary-dark: #005fa3;
-      --background: #f4f8fb;
+      --bg: #f5f9fc;
       --table-bg: #fff;
-      --border: #e3e8ee;
-      --header-bg: #007acc;
-      --header-color: #fff;
-      --hover-row: #eaf6ff;
-      --shadow: 0 2px 8px rgba(0,0,0,0.10);
+      --text: #1b2a3a;
+      --border: #e2e8f0;
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --radius: 14px;
     }
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(145deg, #f0f6ff, #ffffff);
       margin: 0;
-      background: var(--background);
-      color: #222;
+      color: var(--text);
       min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 10px;
     }
     .container {
+      background: var(--table-bg);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
       width: 100%;
       max-width: 1100px;
-      margin: 36px auto 40px auto;
-      background: var(--table-bg);
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-      padding: 32px 24px 36px 24px;
-      box-sizing: border-box;
+      padding: 36px 32px 48px;
+      animation: fadeIn 0.6s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     h1 {
-      color: var(--primary);
       text-align: center;
-      margin-top: 0;
-      font-size: 2.3rem;
-      font-weight: 700;
-      letter-spacing: 1px;
+      color: var(--primary-dark);
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
     }
     .objectif {
-      text-align: center;
-      margin: 18px auto 18px auto;
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: #0d3c56;
       background: #eaf6ff;
-      padding: 13px 10px;
-      border-radius: 12px;
-      max-width: 800px;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
-    }
-    .desc {
-      text-align: center;
-      margin-bottom: 16px;
-      color: #444;
-      font-size: 1.07rem;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
+      color: #084b76;
+      border-left: 6px solid var(--primary);
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      line-height: 1.4;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
     }
     table {
       border-collapse: collapse;
-      margin: 0 auto;
       width: 100%;
-      background: var(--table-bg);
-      border-radius: 10px;
+      background: white;
+      border-radius: var(--radius);
       overflow: hidden;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-      table-layout: fixed;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      margin-top: 20px;
     }
     th, td {
-      border: 1px solid var(--border);
-      padding: 12px 8px 8px 8px;
+      padding: 10px 8px;
       text-align: center;
-      font-size: 1.05rem;
-      transition: background .2s;
-      word-break: break-word;
+      border: 1px solid var(--border);
     }
     th {
-      background: var(--header-bg);
-      color: var(--header-color);
+      background: var(--primary);
+      color: white;
       font-weight: 600;
       letter-spacing: 0.5px;
-      padding-bottom: 6px;
     }
     .gamme {
-      font-size: 0.88em;
-      color: #007acc;
+      font-size: 0.85em;
+      opacity: 0.8;
       display: block;
-      margin-top: 2px;
-      margin-bottom: -4px;
-      font-weight: 400;
     }
     input[type="number"] {
       width: 90px;
-      padding: 7px;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
       font-size: 1rem;
       text-align: center;
-      border: 1px solid #bbb;
-      border-radius: 6px;
-      outline: none;
-      transition: border 0.2s;
+      transition: all 0.2s;
     }
     input[type="number"]:focus {
-      border: 1.5px solid var(--primary);
+      border-color: var(--primary);
       background: #f0f8ff;
+      box-shadow: 0 0 6px rgba(0,120,215,0.3);
+      outline: none;
     }
+    tr:hover td { background: #f8fbff; }
     .btn {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      padding: 12px 36px;
-      border-radius: 30px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 1.1rem;
-      margin: 32px auto 0 auto;
       display: block;
-      box-shadow: 0 2px 8px rgba(0,122,204,0.08);
-      transition: background 0.25s, box-shadow 0.25s;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 36px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 32px auto 0;
+      transition: all 0.3s;
+      box-shadow: 0 4px 10px rgba(0,120,215,0.15);
     }
     .btn:hover {
       background: var(--primary-dark);
-      box-shadow: 0 4px 16px rgba(0,95,163,0.13);
+      box-shadow: 0 6px 18px rgba(0,95,163,0.25);
+      transform: translateY(-2px);
     }
-    @media (max-width: 900px) {
-      .container { padding: 10px 2px 24px 2px; }
-      table, th, td { font-size: 0.90rem; }
-      input[type="number"] { width: 65px; padding: 5px; }
+    #y_1 {
+      font-weight: bold;
+      color: var(--primary-dark);
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+    .highlight {
+      background: #e8f8ff !important;
+      animation: blink 0.5s;
+    }
+    @keyframes blink {
+      from { background-color: #dff1ff; }
+      to { background-color: transparent; }
+    }
+    @media (max-width: 950px) {
+      th, td { font-size: 0.9rem; }
+      input[type="number"] { width: 70px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🧪 Simulateur de plan d'expérience procédés – Sujet d'examen</h1>
-    <div class="objectif">
-      Vous devez optimiser un procédé en utilisant une approche de plan d'expérience numérique. À l'aide du simulateur ci-dessous, renseignez les paramètres de l'essai que vous souhaitez réaliser, puis cliquez sur <b>Simuler l'expérience</b> pour obtenir le résultat correspondant à vos choix. Reportez ce résultat dans votre logiciel de plan d'expériences.
-    </div>
-    <div class="desc">
-      Les paramètres à renseigner correspondent à des variables opératoires usuelles du génie des procédés. Respectez impérativement les plages autorisées pour chaque variable.<br>
-      <b>Attention :</b> Le simulateur ne fournit qu'un seul résultat à la fois. Vous pouvez relancer autant de simulations que souhaité pour compléter votre plan expérimental sur votre logiciel.
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Température<br><span class="gamme">20–120 °C</span></th>
-          <th>Pression<br><span class="gamme">1–20 bar</span></th>
-          <th>Débit alim.<br><span class="gamme">1–100 L/h</span></th>
-          <th>Conc. initiale<br><span class="gamme">0.01–5 mol/L</span></th>
-          <th>Temps réaction<br><span class="gamme">1–240 min</span></th>
-          <th>Agitation<br><span class="gamme">0–1500 rpm</span></th>
-          <th>pH<br><span class="gamme">1–14</span></th>
-          <th>Catalyseur<br><span class="gamme">1,2,3</span></th>
-          <th>Volume<br><span class="gamme">0.1–10 L</span></th>
-          <th>Y estimé</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><input type="number" id="temp_1" min="20" max="120" step="any"></td>
-          <td><input type="number" id="press_1" min="1" max="20" step="any"></td>
-          <td><input type="number" id="debit_1" min="1" max="100" step="any"></td>
-          <td><input type="number" id="conc_1" min="0.01" max="5" step="any"></td>
-          <td><input type="number" id="temps_1" min="1" max="240" step="any"></td>
-          <td><input type="number" id="agit_1" min="0" max="1500" step="any"></td>
-          <td><input type="number" id="ph_1" min="1" max="14" step="any"></td>
-          <td><input type="number" id="cat_1" min="1" max="3" step="1"></td>
-          <td><input type="number" id="vol_1" min="0.1" max="10" step="any"></td>
-          <td id="y_1">-</td>
-        </tr>
-      </tbody>
-    </table>
-    <button class="btn" onclick="calculerTout()">Simuler l'expérience</button>
+
+<div class="container">
+  <h1>🧪 Simulateur de plan d'expérience – Sujet d'examen</h1>
+  <div class="objectif">
+    Entrez les valeurs physiques des paramètres opératoires ci-dessous, puis cliquez sur <b>Simuler l'expérience</b>.<br>
+    Les valeurs sont centrées et normalisées avant d’être utilisées par le modèle (3 variables actives aléatoires).
   </div>
 
-  <script>
-    // Modèle à structure cachée, interaction, quadratique, bruit
-    function modele(temp, press, debit, conc, temps, agit, ph, cat, vol) {
-      const a = 0.1;
-      const b = 0.2;
-      const c = 0.05;
-      const d = 0.004;
-      const e = -0.0002;
-      const bruit = (Math.random()-0.5) * 2.0; // bruit entre -1 et 1
-      return (
-        a * temp +
-        b * debit +
-        c * temps +
-        d * temp * debit +
-        e * Math.pow(temps,2) +
-        bruit
-      );
-    }
-    function calculerTout() {
-      const temp = parseFloat(document.getElementById('temp_1').value) || 0;
-      const press = parseFloat(document.getElementById('press_1').value) || 0;
-      const debit = parseFloat(document.getElementById('debit_1').value) || 0;
-      const conc = parseFloat(document.getElementById('conc_1').value) || 0;
-      const temps = parseFloat(document.getElementById('temps_1').value) || 0;
-      const agit = parseFloat(document.getElementById('agit_1').value) || 0;
-      const ph = parseFloat(document.getElementById('ph_1').value) || 0;
-      const cat = parseFloat(document.getElementById('cat_1').value) || 0;
-      const vol = parseFloat(document.getElementById('vol_1').value) || 0;
+  <table>
+    <thead>
+      <tr>
+        <th>Température<br><span class="gamme">20–120 °C</span></th>
+        <th>Pression<br><span class="gamme">1–20 bar</span></th>
+        <th>Débit alim.<br><span class="gamme">1–100 L/h</span></th>
+        <th>Conc. initiale<br><span class="gamme">0.01–5 mol/L</span></th>
+        <th>Temps réaction<br><span class="gamme">1–240 min</span></th>
+        <th>Agitation<br><span class="gamme">0–1500 rpm</span></th>
+        <th>pH<br><span class="gamme">1–14</span></th>
+        <th>Catalyseur<br><span class="gamme">1–3</span></th>
+        <th>Volume<br><span class="gamme">0.1–10 L</span></th>
+        <th>Y estimé</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="number" id="temp" min="20" max="120"></td>
+        <td><input type="number" id="press" min="1" max="20"></td>
+        <td><input type="number" id="debit" min="1" max="100"></td>
+        <td><input type="number" id="conc" min="0.01" max="5" step="0.01"></td>
+        <td><input type="number" id="temps" min="1" max="240"></td>
+        <td><input type="number" id="agit" min="0" max="1500"></td>
+        <td><input type="number" id="ph" min="1" max="14"></td>
+        <td><input type="number" id="cat" min="1" max="3"></td>
+        <td><input type="number" id="vol" min="0.1" max="10" step="0.1"></td>
+        <td id="y_1">-</td>
+      </tr>
+    </tbody>
+  </table>
 
-      const y = modele(temp, press, debit, conc, temps, agit, ph, cat, vol);
-      document.getElementById('y_1').innerText = y.toFixed(3);
+  <button class="btn" onclick="calculer()">Simuler l'expérience</button>
+</div>
+
+<script>
+  // Bornes (min, max) pour normalisation
+  const limites = {
+    temp:[20,120], press:[1,20], debit:[1,100],
+    conc:[0.01,5], temps:[1,240], agit:[0,1500],
+    ph:[1,14], cat:[1,3], vol:[0.1,10]
+  };
+
+  // Sélection aléatoire de 3 variables actives
+  const variables = Object.keys(limites);
+  const actives = [];
+  while (actives.length < 3) {
+    const v = variables[Math.floor(Math.random() * variables.length)];
+    if (!actives.includes(v)) actives.push(v);
+  }
+  console.log("Variables actives (cachées):", actives.join(", ")); // à cacher aux étudiants
+
+  // Normalisation linéaire vers [-1,1]
+  function normaliser(val, min, max) {
+    return ((val - (min + max)/2) / ((max - min)/2));
+  }
+
+  // Modèle caché basé sur 3 variables centrées
+  function modele(temp, press, debit, conc, temps, agit, ph, cat, vol) {
+    const bruit = (Math.random() - 0.5) * 2;
+    let y = 0;
+
+    actives.forEach(v => {
+      const [min,max] = limites[v];
+      const x = normaliser(eval(v), min, max); // variable codée [-1,1]
+      switch (v) {
+        case "temp":  y += 1.2 * x; break;
+        case "press": y += 0.8 * x; break;
+        case "debit": y += 0.9 * Math.sin(x*Math.PI/2); break;
+        case "conc":  y += 1.5 * x; break;
+        case "temps": y += 0.7 * x; break;
+        case "agit":  y += 0.6 * x; break;
+        case "ph":    y -= 1.4 * Math.pow(x,2); break;
+        case "cat":   y += 0.9 * x; break;
+        case "vol":   y += 0.5 * x; break;
+      }
+    });
+
+    // Interaction entre les 3 actives
+    if (actives.length === 3) {
+      const [a,b,c] = actives.map(v => normaliser(eval(v),...limites[v]));
+      y += 0.4 * a*b - 0.2 * b*c + bruit;
     }
-  </script>
+    return y;
+  }
+
+  function calculer() {
+    const vals = {};
+    for (const v in limites)
+      vals[v] = parseFloat(document.getElementById(v).value) || 0;
+    const y = modele(...Object.values(vals));
+    const yCell = document.getElementById('y_1');
+    yCell.textContent = y.toFixed(3);
+    yCell.classList.add('highlight');
+    setTimeout(() => yCell.classList.remove('highlight'), 800);
+  }
+</script>
 </body>
 </html>
