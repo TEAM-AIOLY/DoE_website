@@ -1,45 +1,256 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plan d'Expérience en Génie des Procédés</title>
+  <meta charset="UTF-8">
+  <title>Simulateur de plan d'expérience - Génie des Procédés</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --primary: #007acc;
+      --primary-dark: #005fa3;
+      --background: #f4f8fb;
+      --table-bg: #fff;
+      --border: #e3e8ee;
+      --header-bg: #007acc;
+      --header-color: #fff;
+      --hover-row: #eaf6ff;
+      --shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      background: var(--background);
+      color: #222;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 950px;
+      margin: 36px auto 40px auto;
+      background: var(--table-bg);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 32px 24px 36px 24px;
+    }
+    h1 {
+      color: var(--primary);
+      text-align: center;
+      margin-top: 0;
+      font-size: 2.3rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .objectif {
+      text-align: center;
+      margin: 18px auto 18px auto;
+      font-size: 1.18rem;
+      font-weight: 600;
+      color: #0d3c56;
+      background: #eaf6ff;
+      padding: 13px 10px;
+      border-radius: 12px;
+      max-width: 750px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    }
+    .desc {
+      text-align: center;
+      margin-bottom: 16px;
+      color: #444;
+      font-size: 1.07rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .contrainte {
+      margin: 0 auto 22px auto;
+      max-width: 730px;
+      font-size: 1rem;
+      background: #f8fbff;
+      border-left: 5px solid #007acc;
+      padding: 13px 18px 13px 18px;
+      border-radius: 0 9px 9px 0;
+      color: #17547d;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 0 auto;
+      background: var(--table-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 12px 8px;
+      text-align: center;
+      font-size: 1.05rem;
+      transition: background .2s;
+    }
+    th {
+      background: var(--header-bg);
+      color: var(--header-color);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    tbody tr:hover {
+      background: var(--hover-row);
+    }
+    input[type="number"] {
+      width: 90px;
+      padding: 7px;
+      font-size: 1rem;
+      text-align: center;
+      border: 1px solid #bbb;
+      border-radius: 6px;
+      outline: none;
+      transition: border 0.2s;
+    }
+    input[type="number":focus] {
+      border: 1.5px solid var(--primary);
+      background: #f0f8ff;
+    }
+    .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 12px 36px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin: 32px auto 0 auto;
+      display: block;
+      box-shadow: 0 2px 8px rgba(0,122,204,0.08);
+      transition: background 0.25s, box-shadow 0.25s;
+    }
+    .btn:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 4px 16px rgba(0,95,163,0.13);
+    }
+    @media (max-width: 600px) {
+      .container { padding: 10px 2px 24px 2px; }
+      table, th, td { font-size: 0.90rem; }
+      input[type="number"] { width: 54px; padding: 5px; }
+    }
+  </style>
 </head>
 <body>
-    <h1>Plan d'Expérience en Génie des Procédés</h1>
-    <p>Ce plan d'expérience vise à optimiser les conditions de fonctionnement d'un réacteur chimique en tenant compte des contraintes sur les plages variables. Les variables d'étude incluent :</p>
-    <ul>
-        <li>Température [20-120°C]</li>
-        <li>Pression [1-20 bar]</li>
-        <li>Débit d’alimentation [1-100 L/h]</li>
-        <li>Concentration initiale [0.01-5 mol/L]</li>
-        <li>Temps de réaction [1-240 min]</li>
-        <li>Vitesse d’agitation [0-1500 rpm]</li>
-        <li>pH initial [1-14]</li>
-        <li>Type de catalyseur [1-3]</li>
-        <li>Volume du réacteur [0.1-10 L]</li>
-    </ul>
-    <p>Les résultats de ces expériences permettront d'ajuster les paramètres optimaux pour le processus chimique étudié.</p>
-    <form>
-        <label for="temperature">Température :</label>
-        <input type="number" id="temperature" name="temperature" min="20" max="120"><br>
-        <label for="pressure">Pression :</label>
-        <input type="number" id="pressure" name="pressure" min="1" max="20"><br>
-        <label for="feedRate">Débit d’alimentation :</label>
-        <input type="number" id="feedRate" name="feedRate" min="1" max="100"><br>
-        <label for="initialConcentration">Concentration initiale :</label>
-        <input type="number" id="initialConcentration" name="initialConcentration" min="0.01" max="5"><br>
-        <label for="reactionTime">Temps de réaction :</label>
-        <input type="number" id="reactionTime" name="reactionTime" min="1" max="240"><br>
-        <label for="agitationSpeed">Vitesse d’agitation :</label>
-        <input type="number" id="agitationSpeed" name="agitationSpeed" min="0" max="1500"><br>
-        <label for="initialPH">pH initial :</label>
-        <input type="number" id="initialPH" name="initialPH" min="1" max="14"><br>
-        <label for="catalystType">Type de catalyseur :</label>
-        <input type="number" id="catalystType" name="catalystType" min="1" max="3"><br>
-        <label for="reactorVolume">Volume du réacteur :</label>
-        <input type="number" id="reactorVolume" name="reactorVolume" min="0.1" max="10"><br>
-        <input type="submit" value="Soumettre">
-    </form>
+  <div class="container">
+    <h1>🧪 Simulateur de plan d'expérience procédés</h1>
+    <div class="objectif">
+      L'objectif : <b>optimiser le fonctionnement d'un réacteur en procédés</b> en réalisant virtuellement un plan d'expérience.
+      Pour cela, vous disposez ci-dessous d'un simulateur interactif permettant d'explorer l'influence de plusieurs paramètres opératoires sur la performance du procédé.
+    </div>
+    <div class="desc">
+      Ce simulateur vous permet de tester les effets combinés de neuf variables de procédé, typiques du génie des procédés, sur un rendement simulé.
+      Seules trois variables (Température, Débit d’alimentation, Temps de réaction) influencent le résultat dans ce modèle illustratif.
+      Le modèle inclut un effet d’interaction et un effet quadratique, illustrant des phénomènes courants dans les plans d’expériences industriels.
+      <br>
+      <b>Utilisation :</b> Remplissez chaque ligne du tableau avec vos conditions d'essai, dans les plages indiquées sous forme de contraintes. Les autres paramètres sont ignorés par le modèle.
+    </div>
+    <div class="contrainte">
+      <b>Contraintes :</b> Température <b>20–120 °C</b> | Pression <b>1–20 bar</b> | Débit d’alimentation <b>1–100 L/h</b> |
+      Concentration initiale <b>0.01–5 mol/L</b> | Temps de réaction <b>1–240 min</b> | Agitation <b>0–1500 rpm</b> |
+      pH <b>1–14</b> | Catalyseur <b>1 =A, 2 =B, 3 =C</b> | Volume réacteur <b>0.1–10 L</b>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Essai</th>
+          <th>Température (°C)</th>
+          <th>Pression (bar)</th>
+          <th>Débit alim. (L/h)</th>
+          <th>Conc. initiale (mol/L)</th>
+          <th>Temps réaction (min)</th>
+          <th>Agitation (rpm)</th>
+          <th>pH initial</th>
+          <th>Catalyseur</th>
+          <th>Volume (L)</th>
+          <th>Y estimé</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><input type="number" id="temp_1" min="20" max="120" step="any"></td>
+          <td><input type="number" id="press_1" min="1" max="20" step="any"></td>
+          <td><input type="number" id="debit_1" min="1" max="100" step="any"></td>
+          <td><input type="number" id="conc_1" min="0.01" max="5" step="any"></td>
+          <td><input type="number" id="temps_1" min="1" max="240" step="any"></td>
+          <td><input type="number" id="agit_1" min="0" max="1500" step="any"></td>
+          <td><input type="number" id="ph_1" min="1" max="14" step="any"></td>
+          <td><input type="number" id="cat_1" min="1" max="3" step="1"></td>
+          <td><input type="number" id="vol_1" min="0.1" max="10" step="any"></td>
+          <td id="y_1">-</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><input type="number" id="temp_2" min="20" max="120" step="any"></td>
+          <td><input type="number" id="press_2" min="1" max="20" step="any"></td>
+          <td><input type="number" id="debit_2" min="1" max="100" step="any"></td>
+          <td><input type="number" id="conc_2" min="0.01" max="5" step="any"></td>
+          <td><input type="number" id="temps_2" min="1" max="240" step="any"></td>
+          <td><input type="number" id="agit_2" min="0" max="1500" step="any"></td>
+          <td><input type="number" id="ph_2" min="1" max="14" step="any"></td>
+          <td><input type="number" id="cat_2" min="1" max="3" step="1"></td>
+          <td><input type="number" id="vol_2" min="0.1" max="10" step="any"></td>
+          <td id="y_2">-</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><input type="number" id="temp_3" min="20" max="120" step="any"></td>
+          <td><input type="number" id="press_3" min="1" max="20" step="any"></td>
+          <td><input type="number" id="debit_3" min="1" max="100" step="any"></td>
+          <td><input type="number" id="conc_3" min="0.01" max="5" step="any"></td>
+          <td><input type="number" id="temps_3" min="1" max="240" step="any"></td>
+          <td><input type="number" id="agit_3" min="0" max="1500" step="any"></td>
+          <td><input type="number" id="ph_3" min="1" max="14" step="any"></td>
+          <td><input type="number" id="cat_3" min="1" max="3" step="1"></td>
+          <td><input type="number" id="vol_3" min="0.1" max="10" step="any"></td>
+          <td id="y_3">-</td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn" onclick="calculerTout()">Calculer Y</button>
+  </div>
+
+  <script>
+    // Modèle illustratif : Y = a*T + b*D + c*t + d*T*D + e*t^2 + bruit
+    // Seules Température (T), Débit (D), Temps (t) sont actifs ; les autres variables sont ignorées.
+    function modele(temp, press, debit, conc, temps, agit, ph, cat, vol) {
+      // Coefficients arbitraires
+      const a = 0.1;   // effet linéaire de Température
+      const b = 0.2;   // effet linéaire de Débit
+      const c = 0.05;  // effet linéaire de Temps de réaction
+      const d = 0.004; // interaction Temp x Débit
+      const e = -0.0002; // effet quadratique sur Temps de réaction
+      const bruit = (Math.random()-0.5) * 2.0; // bruit aléatoire entre -1 et +1
+      return (
+        a * temp +
+        b * debit +
+        c * temps +
+        d * temp * debit +
+        e * Math.pow(temps,2) +
+        bruit
+      );
+    }
+
+    function calculerTout() {
+      for (let i = 1; i <= 3; i++) {
+        const temp = parseFloat(document.getElementById(`temp_${i}`).value) || 0;
+        const press = parseFloat(document.getElementById(`press_${i}`).value) || 0;
+        const debit = parseFloat(document.getElementById(`debit_${i}`).value) || 0;
+        const conc = parseFloat(document.getElementById(`conc_${i}`).value) || 0;
+        const temps = parseFloat(document.getElementById(`temps_${i}`).value) || 0;
+        const agit = parseFloat(document.getElementById(`agit_${i}`).value) || 0;
+        const ph = parseFloat(document.getElementById(`ph_${i}`).value) || 0;
+        const cat = parseFloat(document.getElementById(`cat_${i}`).value) || 0;
+        const vol = parseFloat(document.getElementById(`vol_${i}`).value) || 0;
+
+        const y = modele(temp, press, debit, conc, temps, agit, ph, cat, vol);
+        document.getElementById(`y_${i}`).innerText = y.toFixed(3);
+      }
+    }
+  </script>
 </body>
 </html>
