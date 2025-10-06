@@ -15,6 +15,7 @@
       --shadow: 0 4px 20px rgba(0,0,0,0.08);
       --radius: 14px;
     }
+
     body {
       font-family: "Segoe UI", Roboto, Arial, sans-serif;
       background: linear-gradient(145deg, #f0f6ff, #ffffff);
@@ -26,37 +27,53 @@
       align-items: flex-start;
       padding: 40px 10px;
     }
+
     .container {
       background: var(--table-bg);
       box-shadow: var(--shadow);
       border-radius: var(--radius);
       width: 100%;
-      max-width: 1100px;
-      padding: 36px 32px 48px;
+      max-width: 1200px;
+      padding: 48px 48px 60px;
       animation: fadeIn 0.6s ease-out;
     }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
     h1 {
       text-align: center;
       color: var(--primary-dark);
-      font-size: 2.2rem;
-      margin-bottom: 16px;
+      font-size: 2.3rem;
+      margin-bottom: 20px;
       letter-spacing: 0.5px;
     }
+
     .objectif {
       background: #eaf6ff;
       color: #084b76;
       border-left: 6px solid var(--primary);
-      padding: 14px 18px;
+      padding: 16px 22px;
       border-radius: 10px;
-      font-size: 1.05rem;
-      line-height: 1.4;
+      font-size: 1.1rem;
+      line-height: 1.5;
       box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
+
+    .desc {
+      text-align: center;
+      margin-bottom: 22px;
+      color: #444;
+      font-size: 1.05rem;
+      max-width: 950px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.45;
+    }
+
     table {
       border-collapse: collapse;
       width: 100%;
@@ -66,71 +83,83 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
       margin-top: 20px;
     }
+
     th, td {
       padding: 10px 8px;
       text-align: center;
       border: 1px solid var(--border);
     }
+
     th {
       background: var(--primary);
       color: white;
       font-weight: 600;
       letter-spacing: 0.5px;
     }
+
     .gamme {
       font-size: 0.85em;
       opacity: 0.8;
       display: block;
     }
+
     input[type="number"] {
-      width: 90px;
-      padding: 6px;
+      width: 95px;
+      padding: 7px;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 1rem;
       text-align: center;
       transition: all 0.2s;
     }
+
     input[type="number"]:focus {
       border-color: var(--primary);
       background: #f0f8ff;
       box-shadow: 0 0 6px rgba(0,120,215,0.3);
       outline: none;
     }
+
     tr:hover td { background: #f8fbff; }
+
     .btn {
       display: block;
       background: var(--primary);
       color: white;
       border: none;
       border-radius: 50px;
-      padding: 14px 36px;
-      font-size: 1.1rem;
+      padding: 15px 40px;
+      font-size: 1.15rem;
       font-weight: 600;
       cursor: pointer;
-      margin: 32px auto 0;
+      margin: 40px auto 0;
       transition: all 0.3s;
       box-shadow: 0 4px 10px rgba(0,120,215,0.15);
     }
+
     .btn:hover {
       background: var(--primary-dark);
       box-shadow: 0 6px 18px rgba(0,95,163,0.25);
       transform: translateY(-2px);
     }
+
     #y_1 {
       font-weight: bold;
       color: var(--primary-dark);
       font-size: 1.1rem;
       transition: all 0.3s ease;
     }
+
     .highlight {
       background: #e8f8ff !important;
       animation: blink 0.5s;
     }
+
     @keyframes blink {
       from { background-color: #dff1ff; }
       to { background-color: transparent; }
     }
+
     @media (max-width: 950px) {
       th, td { font-size: 0.9rem; }
       input[type="number"] { width: 70px; }
@@ -140,10 +169,18 @@
 <body>
 
 <div class="container">
-  <h1>🧪 Simulateur de plan d'expérience – Sujet d'examen</h1>
+  <h1>🧪 Simulateur de plan d'expérience procédés – Sujet d'examen</h1>
+
   <div class="objectif">
-    Entrez les valeurs physiques des paramètres opératoires ci-dessous, puis cliquez sur <b>Simuler l'expérience</b>.<br>
-    Les valeurs sont centrées et normalisées avant d’être utilisées par le modèle (3 variables actives aléatoires).
+    Vous devez optimiser un procédé en utilisant une approche de plan d'expérience numérique.  
+    À l'aide du simulateur ci-dessous, renseignez les paramètres de l'essai que vous souhaitez réaliser, puis cliquez sur <b>Simuler l'expérience</b> pour obtenir le résultat correspondant à vos choix.  
+    Reportez ce résultat dans votre logiciel de plan d'expériences.
+  </div>
+
+  <div class="desc">
+    Les paramètres à renseigner correspondent à des variables opératoires usuelles du génie des procédés.  
+    Respectez impérativement les plages autorisées pour chaque variable.<br>
+    <b>Attention :</b> Le simulateur ne fournit qu’un seul résultat à la fois. Vous pouvez relancer autant de simulations que souhaité pour compléter votre plan expérimental.
   </div>
 
   <table>
@@ -181,53 +218,47 @@
 </div>
 
 <script>
-  // Bornes (min, max) pour normalisation
+  // Limites des variables
   const limites = {
     temp:[20,120], press:[1,20], debit:[1,100],
     conc:[0.01,5], temps:[1,240], agit:[0,1500],
     ph:[1,14], cat:[1,3], vol:[0.1,10]
   };
 
-  // Sélection aléatoire de 3 variables actives
-  const variables = Object.keys(limites);
-  const actives = [];
-  while (actives.length < 3) {
-    const v = variables[Math.floor(Math.random() * variables.length)];
-    if (!actives.includes(v)) actives.push(v);
-  }
-  console.log("Variables actives (cachées):", actives.join(", ")); // à cacher aux étudiants
+  // Variables actives figées
+  const actives = ["temp", "conc", "ph"];
+  console.log("Variables actives :", actives.join(", "));
 
-  // Normalisation linéaire vers [-1,1]
   function normaliser(val, min, max) {
     return ((val - (min + max)/2) / ((max - min)/2));
   }
 
-  // Modèle caché basé sur 3 variables centrées
+  // === Modèle caché simplifié ===
+  // 2 effets linéaires (temp, conc)
+  // 1 effet quadratique (ph)
+  // 1 effet croisé (temp × conc)
+  // + bruit expérimental
   function modele(temp, press, debit, conc, temps, agit, ph, cat, vol) {
-    const bruit = (Math.random() - 0.5) * 2;
-    let y = 0;
+    const bruit = (Math.random() - 0.5) * 1.5; // bruit ±0.75
 
-    actives.forEach(v => {
-      const [min,max] = limites[v];
-      const x = normaliser(eval(v), min, max); // variable codée [-1,1]
-      switch (v) {
-        case "temp":  y += 1.2 * x; break;
-        case "press": y += 0.8 * x; break;
-        case "debit": y += 0.9 * Math.sin(x*Math.PI/2); break;
-        case "conc":  y += 1.5 * x; break;
-        case "temps": y += 0.7 * x; break;
-        case "agit":  y += 0.6 * x; break;
-        case "ph":    y -= 1.4 * Math.pow(x,2); break;
-        case "cat":   y += 0.9 * x; break;
-        case "vol":   y += 0.5 * x; break;
-      }
-    });
+    const X1 = normaliser(temp, ...limites.temp);
+    const X2 = normaliser(conc, ...limites.conc);
+    const X3 = normaliser(ph, ...limites.ph);
 
-    // Interaction entre les 3 actives
-    if (actives.length === 3) {
-      const [a,b,c] = actives.map(v => normaliser(eval(v),...limites[v]));
-      y += 0.4 * a*b - 0.2 * b*c + bruit;
-    }
+    // Coefficients fixes
+    const b0 = 2.0;
+    const b1 = 1.2;   // effet linéaire de la température
+    const b2 = 1.0;   // effet linéaire de la concentration
+    const b33 = -1.4; // effet quadratique du pH
+    const b12 = 0.6;  // interaction température × concentration
+
+    const y =
+      b0 +
+      b1*X1 + b2*X2 +
+      b33*X3*X3 +
+      b12*X1*X2 +
+      bruit;
+
     return y;
   }
 
