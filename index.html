@@ -249,7 +249,7 @@
   // 1 effet croisé (temp × conc)
   // + bruit expérimental
   function modele(temp, press, debit, conc, temps, agit, ph, cat, vol) {
-    const bruit =  (Math.random() - 0.5) * 0.5; // bruit ±0.75
+    const bruit =  (Math.random() - 0.5) * 0.1; // bruit ±0.75
 
     const X1 = normaliser(temp, ...limites.temp);
     const X2 = normaliser(conc, ...limites.conc);
@@ -259,7 +259,7 @@
     const b0 = 2.0;
     const b1 = 3.2;   // effet linéaire de la température
     const b2 = 5.0;   // effet linéaire de la concentration
-    const b3 = 2 █// effet linéaire du débit
+    const b3 = 2; // effet linéaire du débit
     const b33 = -1.4; // effet quadratique du pH
     const b12 = 0.6;  // interaction température × concentration
 
