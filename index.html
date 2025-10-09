@@ -178,19 +178,19 @@
   </div>
 
   <div class="desc">
-  L’étude porte sur le <b>réglage d’un procédé de transformation en réacteur semi-batch</b> dans le but d’identifier les conditions opératoires offrant la meilleure performance globale du système.  
-  La variable de réponse <b>Y</b> correspond à une <b>mesure expérimentale normalisée</b> traduisant l’efficacité du procédé (par exemple un taux de conversion relatif, une production spécifique ou une intensité de signal mesurée en ligne).  
-  <br><br>
-  Ce simulateur reproduit le comportement expérimental du procédé à partir d’un modèle interne non linéaire faisant intervenir plusieurs variables opératoires.  
-  Seules certaines d’entre elles influencent réellement la réponse <b>Y</b>, mais leur effet exact n’est pas connu à l’avance : votre rôle est de le déterminer à l’aide d’une stratégie de plan d’expériences.
-  <br><br>
-  Pour chaque essai, choisissez les valeurs des paramètres opératoires que vous souhaitez tester dans les plages de validité indiquées, puis cliquez sur <b>Simuler l’expérience</b> pour obtenir la valeur correspondante de <b>Y</b>.  
-  Chaque simulation correspond à une mesure expérimentale unique intégrant une légère variabilité aléatoire.
-  <br><br>
-  Vous pouvez réaliser autant de simulations que nécessaire pour explorer le domaine expérimental et modéliser la réponse du système en fonction des facteurs étudiés.  
-  Respectez les plages autorisées : en dehors de ces domaines, le modèle ne représente plus fidèlement le comportement physique du procédé.
-    
-  <b>Attention :</b> Le simulateur ne fournit qu’un seul résultat à la fois. Vous pouvez relancer autant de simulations que souhaité pour compléter votre plan expérimental.
+    L’étude porte sur le <b>réglage d’un procédé de transformation en réacteur semi-batch</b> dans le but d’identifier les conditions opératoires offrant la meilleure performance globale du système.  
+    La variable de réponse <b>Y</b> correspond à une <b>mesure expérimentale normalisée</b> traduisant l’efficacité du procédé (par exemple un taux de conversion relatif, une production spécifique ou une intensité de signal mesurée en ligne).  
+    <br><br>
+    Ce simulateur reproduit le comportement expérimental du procédé à partir d’un modèle interne non linéaire faisant intervenir plusieurs variables opératoires.  
+    Seules certaines d’entre elles influencent réellement la réponse <b>Y</b>, mais leur effet exact n’est pas connu à l’avance : votre rôle est de le déterminer à l’aide d’une stratégie de plan d’expériences.
+    <br><br>
+    Pour chaque essai, choisissez les valeurs des paramètres opératoires que vous souhaitez tester dans les plages de validité indiquées, puis cliquez sur <b>Simuler l’expérience</b> pour obtenir la valeur correspondante de <b>Y</b>.  
+    Chaque simulation correspond à une mesure expérimentale unique intégrant une légère variabilité aléatoire.
+    <br><br>
+    Vous pouvez réaliser autant de simulations que nécessaire pour explorer le domaine expérimental et modéliser la réponse du système en fonction des facteurs étudiés.  
+    Respectez les plages autorisées : en dehors de ces domaines, le modèle ne représente plus fidèlement le comportement physique du procédé.
+    <br><br>
+    <b>Attention :</b> Le simulateur ne fournit qu’un seul résultat à la fois. Vous pouvez relancer autant de simulations que souhaité pour compléter votre plan expérimental.
   </div>
 
   <table>
@@ -235,48 +235,45 @@
     ph:[1,14], cat:[1,3], vol:[0.1,10]
   };
 
-  // Variables actives figées
-  const actives = ["temp", "conc", "ph"];
-  console.log("Variables actives :", actives.join(", "));
-
   function normaliser(val, min, max) {
     return ((val - (min + max)/2) / ((max - min)/2));
   }
 
-  // === Modèle caché simplifié ===
-  // 2 effets linéaires (temp, conc)
-  // 1 effet quadratique (ph)
-  // 1 effet croisé (temp × conc)
-  // + bruit expérimental
+  // === Modèle caché ===
   function modele(temp, press, debit, conc, temps, agit, ph, cat, vol) {
-    const bruit =  (Math.random() - 0.5) * 0.1; // bruit ±0.75
+    const bruit = (Math.random() - 0.5) * 0.1; // ±0.05 aléatoire
 
     const X1 = normaliser(temp, ...limites.temp);
     const X2 = normaliser(conc, ...limites.conc);
     const X3 = normaliser(ph, ...limites.ph);
 
-    // Coefficients fixes
+    // Coefficients
     const b0 = 2.0;
-    const b1 = 3.2;   // effet linéaire de la température
-    const b2 = 5.0;   // effet linéaire de la concentration
-    const b3 = 2; // effet linéaire du débit
-    const b33 = -1.4; // effet quadratique du pH
-    const b12 = 0.6;  // interaction température × concentration
+    const b1 = 3.2;
+    const b2 = 5.0;
+    const b3 = 2.0;
+    const b33 = -1.4;
+    const b12 = 0.6;
 
-    const y =
-      b0 +
-      b1*X1 + b2*X2 + b3*X3 +
-      b33*X3*X3 +
-      b12*X1*X2 +
-      bruit;
-
-    return y;
+    return b0 + b1*X1 + b2*X2 + b3*X3 + b33*X3*X3 + b12*X1*X2 + bruit;
   }
 
   function calculer() {
     const vals = {};
-    for (const v in limites)
-      vals[v] = parseFloat(document.getElementById(v).value) || 0;
+    for (const v in limites) {
+      const val = parseFloat(document.getElementById(v).value);
+      if (isNaN(val)) {
+        alert("Veuillez renseigner toutes les valeurs avant de simuler !");
+        return;
+      }
+      const [min, max] = limites[v];
+      if (val < min || val > max) {
+        alert(`⚠️ La valeur de ${v} doit être comprise entre ${min} et ${max}.`);
+        return;
+      }
+      vals[v] = val;
+    }
+
     const y = modele(...Object.values(vals));
     const yCell = document.getElementById('y_1');
     yCell.textContent = y.toFixed(3);
