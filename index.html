@@ -257,14 +257,15 @@
 
     // Coefficients fixes
     const b0 = 2.0;
-    const b1 = 1.2;   // effet linéaire de la température
-    const b2 = 1.0;   // effet linéaire de la concentration
+    const b1 = 3.2;   // effet linéaire de la température
+    const b2 = 5.0;   // effet linéaire de la concentration
+    const b3 = 2 █// effet linéaire du débit
     const b33 = -1.4; // effet quadratique du pH
     const b12 = 0.6;  // interaction température × concentration
 
     const y =
       b0 +
-      b1*X1 + b2*X2 +
+      b1*X1 + b2*X2 + b3*X3
       b33*X3*X3 +
       b12*X1*X2 +
       bruit;
