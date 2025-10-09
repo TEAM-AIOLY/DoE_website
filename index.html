@@ -249,7 +249,7 @@
   // 1 effet croisé (temp × conc)
   // + bruit expérimental
   function modele(temp, press, debit, conc, temps, agit, ph, cat, vol) {
-    const bruit = (Math.random() - 0.15) *1.5; // bruit ±0.75
+    const bruit =  (Math.random() - 0.5) * 0.5; // bruit ±0.75
 
     const X1 = normaliser(temp, ...limites.temp);
     const X2 = normaliser(conc, ...limites.conc);
