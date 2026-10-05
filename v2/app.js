@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const {factors, validateParameters, runExperiment} = window.DoE;
-  const BUDGET = 24, KEY = 'doe-lab-v2-yield-session';
+  const BUDGET = 40, KEY = 'doe-lab-v2-yield-session';
   const $ = id => document.getElementById(id);
   const defaults = () => Object.fromEntries(factors.map(f => [f.id, f.initial]));
   const fresh = () => ({version:1, parameters:defaults(), experiments:[], xFactor:'temp'});
@@ -80,7 +80,7 @@
     $('budget').value = rows.length;
     $('run').disabled = busy || rows.length >= BUDGET;
     $('restart').disabled = busy;
-    $('run').textContent = busy ? 'Expérience en cours…' : rows.length >= BUDGET ? 'Budget épuisé — 24 essais réalisés' : "Lancer l'expérience →";
+    $('run').textContent = busy ? 'Expérience en cours…' : rows.length >= BUDGET ? 'Budget épuisé — 40 essais réalisés' : "Lancer l'expérience →";
     $('result').textContent = last ? `${format(last.y)} %` : '—';
     $('result-detail').textContent = last ? `Essai ${rows.length} · ${new Date(last.date).toLocaleString('fr-FR')}` : 'Lancez votre premier essai pour obtenir une mesure.';
     $('best').textContent = rows.length ? `Meilleur rendement : ${format(Math.max(...rows.map(e => e.y)))} %` : 'Meilleur rendement : —';

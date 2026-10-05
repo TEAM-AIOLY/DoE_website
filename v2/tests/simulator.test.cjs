@@ -54,27 +54,27 @@ function harness(saved, experiment = runExperiment, storageFails = false) {
   vm.runInNewContext(fs.readFileSync(require.resolve('../app.js'),'utf8'),context);
   return {get,storage,downloads,blobs,submit:() => get('experiment-form').handlers.submit({preventDefault(){}})};
 }
-test('24-trial budget, notebook, charts, CSV and automatic session resume', async () => {
+test('40-trial budget, notebook, charts, CSV and automatic session resume', async () => {
   const app = harness();
-  for(let i=0;i<25;i++) await app.submit();
-  assert.equal(app.get('table-body').children.length,24);
+  for(let i=0;i<41;i++) await app.submit();
+  assert.equal(app.get('table-body').children.length,40);
   assert.equal(app.get('run').disabled,true);
-  assert.match(app.get('counter').textContent,/24 \/ 24/);
+  assert.match(app.get('counter').textContent,/40 \/ 40/);
   assert.match(app.get('history-chart').innerHTML,/<polyline/);
   assert.match(app.get('scatter-chart').innerHTML,/<circle/);
   app.get('export').handlers.click();
   const csv = await app.blobs[0].text();
-  assert.equal(csv.split('\r\n').length,25);
+  assert.equal(csv.split('\r\n').length,41);
   assert.match(csv.split('\r\n')[0], /rendement_pct/);
   assert.match(app.get('result').textContent, /%$/);
   assert.equal(csv.split('\r\n')[0].split(';').length,12);
   const resumed = harness(app.storage.get('doe-lab-v2-yield-session'));
-  assert.equal(resumed.get('table-body').children.length,24);
+  assert.equal(resumed.get('table-body').children.length,40);
   assert.equal(resumed.get('result').textContent,app.get('result').textContent);
   resumed.get('restart').handlers.click();
   assert.equal(resumed.get('reset-dialog').open,true);
   resumed.get('cancel-reset').handlers.click();
-  assert.equal(resumed.get('table-body').children.length,24);
+  assert.equal(resumed.get('table-body').children.length,40);
   resumed.get('confirm-reset').handlers.click();
   assert.equal(resumed.get('table-body').children.length,0);
   assert.equal(resumed.get('run').disabled,false);
