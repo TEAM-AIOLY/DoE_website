@@ -1,4 +1,4 @@
-/* Scientific model from the V1 index.html. Independent of the UI and storage. */
+/* Simulated yield model derived from V1. Independent of the UI and storage. */
 (() => {
   'use strict';
   const factors = [
@@ -28,8 +28,10 @@
       return (parameters[id] - (f.min + f.max) / 2) / ((f.max - f.min) / 2);
     };
     const x1 = normalize('temp'), x2 = normalize('conc'), x3 = normalize('ph');
-    // V1 implementation uses (random - 0.5) * 1, i.e. ±0.5.
-    return 2 + 3.2*x1 + 5*x2 + 2*x3 - 1.4*x3*x3 + 0.6*x1*x2 + (Math.random() - 0.5);
+    // Affine conversion preserves V1 effects and interactions without clipping.
+    // Across the valid domain, yield stays within 0–100%; noise is ±1.5 points.
+    const response = 2 + 3.2*x1 + 5*x2 + 2*x3 - 1.4*x3*x3 + 0.6*x1*x2 + (Math.random() - 0.5);
+    return 50 + 3 * response;
   }
   const api = {factors, validateParameters, runExperiment};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

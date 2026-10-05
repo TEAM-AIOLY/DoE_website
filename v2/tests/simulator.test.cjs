@@ -5,7 +5,7 @@ const vm = require('node:vm');
 const {factors, runExperiment} = require('../model.js');
 const parameters = () => Object.fromEntries(factors.map(f => [f.id, (f.min+f.max)/2]));
 
-test('V1 scientific equivalence: center, corners, interactions and noise', () => {
+test('Yield preserves V1 effects and stays within 0–100%', () => {
   const original = Math.random;
   try {
     for (const random of [0,0.5,0.999]) {
@@ -15,7 +15,8 @@ test('V1 scientific equivalence: center, corners, interactions and noise', () =>
         // Independent transcription of the current V1 modele() expression.
         const X1 = (temp-70)/50, X2 = (conc-2.505)/2.495, X3 = (ph-7.5)/6.5;
         const expected = 2+3.2*X1+5*X2+2*X3-1.4*X3*X3+0.6*X1*X2+(random-0.5);
-        assert.ok(Math.abs(runExperiment(p)-expected)<1e-12);
+        assert.ok(Math.abs(runExperiment(p)-(50+3*expected))<1e-12);
+        assert.ok(runExperiment(p) >= 0 && runExperiment(p) <= 100);
       }
     }
   } finally {Math.random = original;}
@@ -29,7 +30,7 @@ test('all V1 bounds accepted; missing, non-finite and out-of-domain inputs rejec
 
 // Lightweight DOM harness exercises actual app handlers without adding runtime dependencies.
 function harness(saved, experiment = runExperiment, storageFails = false) {
-  const nodes = new Map(), storage = new Map(saved ? [['doe-lab-v2-session',saved]] : []);
+  const nodes = new Map(), storage = new Map(saved ? [['doe-lab-v2-yield-session',saved]] : []);
   class Element {
     constructor(id) {this.id=id; this.value=''; this.textContent=''; this.children=[]; this.handlers={}; this.validity={valid:true};}
     set innerHTML(v) {this.html=v; for (const m of v.matchAll(/id="([^"]+)"/g)) get(m[1]);}
@@ -64,8 +65,10 @@ test('24-trial budget, notebook, charts, CSV and automatic session resume', asyn
   app.get('export').handlers.click();
   const csv = await app.blobs[0].text();
   assert.equal(csv.split('\r\n').length,25);
+  assert.match(csv.split('\r\n')[0], /rendement_pct/);
+  assert.match(app.get('result').textContent, /%$/);
   assert.equal(csv.split('\r\n')[0].split(';').length,12);
-  const resumed = harness(app.storage.get('doe-lab-v2-session'));
+  const resumed = harness(app.storage.get('doe-lab-v2-yield-session'));
   assert.equal(resumed.get('table-body').children.length,24);
   assert.equal(resumed.get('result').textContent,app.get('result').textContent);
   resumed.get('restart').handlers.click();
@@ -83,8 +86,8 @@ test('slider sync, numeric persistence and scatter factor selection', async () =
   app.get('conc').value='3.123'; app.get('conc').handlers.input();
   await app.submit();
   app.get('x-factor').value='conc'; app.get('x-factor').handlers.change();
-  assert.match(app.get('scatter-chart').innerHTML,/Concentration initiale vs Y/);
-  const session = JSON.parse(app.storage.get('doe-lab-v2-session'));
+  assert.match(app.get('scatter-chart').innerHTML,/Concentration initiale vs rendement/);
+  const session = JSON.parse(app.storage.get('doe-lab-v2-yield-session'));
   assert.equal(session.experiments[0].parameters.conc,3.123);
   assert.equal(session.xFactor,'conc');
 });
